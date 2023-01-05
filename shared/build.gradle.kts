@@ -74,6 +74,7 @@ kotlin {
     }
 }
 
+@Suppress("UnstableApiUsage")
 android {
     namespace = "com.plcoding.translator_kmm"
     compileSdk = 33

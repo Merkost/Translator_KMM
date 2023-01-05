@@ -1,4 +1,4 @@
-package com.example.translator_kmm
+package com.merkost.translator_kmm
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${android.os.Build.VERSION.SDK_INT}"

@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -8,11 +6,12 @@ plugins {
     kotlin("plugin.serialization") version Deps.kotlinVersion
 }
 
+@Suppress("UnstableApiUsage")
 android {
-    namespace = "com.plcoding.translator_kmm.android"
+    namespace = "com.merkost.translator_kmm.android"
     compileSdk = 33
     defaultConfig {
-        applicationId = "com.plcoding.translator_kmm.android"
+        applicationId = "com.merkost.translator_kmm.android"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

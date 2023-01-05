@@ -1,4 +1,4 @@
-package com.example.translator_kmm.android
+package com.merkost.translator_kmm.android
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape

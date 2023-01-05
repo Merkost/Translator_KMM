@@ -1,4 +1,4 @@
-package com.example.translator_kmm
+package com.merkost.translator_kmm
 
 import platform.UIKit.UIDevice
 

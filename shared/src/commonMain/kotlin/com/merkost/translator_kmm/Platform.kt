@@ -1,4 +1,4 @@
-package com.example.translator_kmm
+package com.merkost.translator_kmm
 
 interface Platform {
     val name: String
