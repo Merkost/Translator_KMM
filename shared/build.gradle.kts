@@ -83,3 +83,10 @@ android {
         targetSdk = 33
     }
 }
+
+sqldelight {
+    database("TranslateDatabase") {
+        packageName = "com.merkost.translator_kmm.database"
+        sourceFolders = listOf("sqldelight")
+    }
+}
