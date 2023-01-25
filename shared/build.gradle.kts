@@ -76,7 +76,7 @@ kotlin {
 
 @Suppress("UnstableApiUsage")
 android {
-    namespace = "com.plcoding.translator_kmm"
+    namespace = "com.merkost.translator_kmm"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
