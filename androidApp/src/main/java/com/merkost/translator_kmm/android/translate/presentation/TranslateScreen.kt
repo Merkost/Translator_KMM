@@ -27,6 +27,7 @@ import androidx.compose.material.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TranslateScreen(
     state: TranslateState,
@@ -68,9 +69,93 @@ fun TranslateScreen(
     ) { padding ->
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(padding)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    LanguageDropDown(
+                        language = state.fromLanguage,
+                        isOpen = state.isChoosingFromLanguage,
+                        onClick = {
+                            onEvent(TranslateEvent.OpenFromLanguageDropDown)
+                        },
+                        onDismiss = {
+                            onEvent(TranslateEvent.StopChoosingLanguage)
+                        },
+                        onSelectLanguage = {
+                            onEvent(TranslateEvent.ChooseFromLanguage(it))
+                        }
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    SwapLanguagesButton(onClick = {
+                        onEvent(TranslateEvent.SwapLanguages)
+                    })
+                    Spacer(modifier = Modifier.weight(1f))
+                    LanguageDropDown(
+                        language = state.toLanguage,
+                        isOpen = state.isChoosingToLanguage,
+                        onClick = {
+                            onEvent(TranslateEvent.OpenToLanguageDropDown)
+                        },
+                        onDismiss = {
+                            onEvent(TranslateEvent.StopChoosingLanguage)
+                        },
+                        onSelectLanguage = {
+                            onEvent(TranslateEvent.ChooseToLanguage(it))
+                        }
+                    )
+                }
+            }
+            item {
+                val clipboardManager = LocalClipboardManager.current
+                val keyboardController = LocalSoftwareKeyboardController.current
+                TranslateTextField(
+                    fromText = state.fromText,
+                    toText = state.toText,
+                    isTranslating = state.isTranslating,
+                    fromLanguage = state.fromLanguage,
+                    toLanguage = state.toLanguage,
+                    onTranslateClick = {
+                        keyboardController?.hide()
+                        onEvent(TranslateEvent.Translate)
+                    },
+                    onTextChange = {
+                        onEvent(TranslateEvent.ChangeTranslationText(it))
+                    },
+                    onCopyClick = { text ->
+                        clipboardManager.setText(
+                            buildAnnotatedString {
+                                append(text)
+                            }
+                        )
+                        Toast.makeText(
+                            context,
+                            context.getString(
+                                com.merkost.translator_kmm.android.R.string.copied_to_clipboard
+                            ),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    },
+                    onCloseClick = {
+                        onEvent(TranslateEvent.CloseTranslation)
+                    },
+                    onSpeakerClick = {
+
+                    },
+                    onTextFieldClick = {
+                        onEvent(TranslateEvent.EditTranslation)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
             item {
                 if (state.history.isNotEmpty()) {
